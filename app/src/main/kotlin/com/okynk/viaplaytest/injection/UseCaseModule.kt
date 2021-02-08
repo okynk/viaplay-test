@@ -7,8 +7,8 @@ import org.koin.dsl.module
 val useCaseModule = module {
     single<UseCase> {
         UseCaseImpl(
-                repository = get(),
-                scheduler = get()
+            repository = get(),
+            scheduler = get()
         )
     }
 }

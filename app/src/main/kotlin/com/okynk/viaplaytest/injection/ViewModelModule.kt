@@ -7,6 +7,10 @@ import org.koin.dsl.module
 
 val viewModelModule = module {
     viewModel {
-        MainViewModel(androidApplication(), get())
+        MainViewModel(
+            application = androidApplication(),
+            scheduler = get(),
+            useCase = get()
+        )
     }
 }

@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">viaplay-test</string>
+
+    <string name="general.title.error">Error</string>
+    <string name="general.label.error">Something went wrong</string>
+    <string name="general.button.ok">OK</string>
 </resources>

@@ -28,9 +28,11 @@ class App : MultiDexApplication() {
 
 // Gather app's all modules
 val appModules = listOf(
-        dataSourceModule,
-        repositoryModule,
-        useCaseModule,
-        utilModule,
-        viewModelModule
+    dataSourceModule,
+    repositoryModule,
+    useCaseModule,
+    utilModule,
+    viewModelModule,
+    mapperModule,
+    apiModule
 )

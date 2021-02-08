@@ -12,6 +12,10 @@ val dataSourceModule = module {
     }
 
     single<DataSource>(named(DataSource.REMOTE)) {
-        RemoteDataSource()
+        RemoteDataSource(
+            apiService = get(),
+            mapperDashboard = get(),
+            mapperSection = get()
+        )
     }
 }

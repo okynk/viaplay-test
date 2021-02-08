@@ -13,7 +13,6 @@ import androidx.fragment.app.Fragment
 import com.afollestad.materialdialogs.MaterialDialog
 import com.okynk.viaplaytest.R
 import com.okynk.viaplaytest.model.MessageDialogEntity
-import com.okynk.viaplaytest.model.ScreenEntity
 
 abstract class BaseFragment<VM : BaseViewModel, BINDING : ViewDataBinding> : Fragment() {
     protected lateinit var viewBinding: BINDING
@@ -94,18 +93,5 @@ abstract class BaseFragment<VM : BaseViewModel, BINDING : ViewDataBinding> : Fra
         viewModel.goBack.observe(viewLifecycleOwner) {
             activity?.onBackPressed()
         }
-
-        viewModel.startActivity.observe(viewLifecycleOwner) {
-            redirectPage(it)
-        }
-    }
-
-    private fun redirectPage(screen: ScreenEntity) {
-        startActivity(
-            when (screen) {
-                ScreenEntity.SectionList -> TODO()
-                is ScreenEntity.SectionDetail -> TODO()
-            }
-        )
     }
 }

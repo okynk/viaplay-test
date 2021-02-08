@@ -1,4 +1,4 @@
-package com.okynk.viaplaytest.feature.screen.main
+package com.okynk.viaplaytest.feature.screen
 
 import android.os.Bundle
 import com.okynk.viaplaytest.R

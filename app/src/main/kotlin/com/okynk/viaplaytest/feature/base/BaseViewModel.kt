@@ -4,7 +4,6 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import com.okynk.viaplaytest.model.MessageDialogEntity
-import com.okynk.viaplaytest.model.ScreenEntity
 import com.okynk.viaplaytest.model.toMessageDialogEntity
 import com.okynk.viaplaytest.util.SingleLiveEvent
 import com.okynk.viaplaytest.util.scheduler.SchedulerProvider
@@ -32,9 +31,6 @@ abstract class BaseViewModel(application: Application, private val scheduler: Sc
 
     protected val mGoBack = SingleLiveEvent<Void>()
     val goBack: LiveData<Void> = mGoBack
-
-    protected val mStartActivity = SingleLiveEvent<ScreenEntity>()
-    val startActivity: LiveData<ScreenEntity> = mStartActivity
 
     private val disposable = CompositeDisposable()
 

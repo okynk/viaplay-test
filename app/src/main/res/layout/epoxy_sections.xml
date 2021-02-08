@@ -7,12 +7,13 @@
 
         <variable
             name="data"
-            type="com.okynk.viaplaytest.feature.screen.main.epoxy.MainEpoxyData" />
+            type="com.okynk.viaplaytest.feature.screen.sections.epoxy.SectionsEpoxyData" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="?android:selectableItemBackground"
         android:onClick="@{() -> data.onClick.invoke(data.item)}">
 
         <TextView

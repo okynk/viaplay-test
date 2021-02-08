@@ -1,23 +1,22 @@
-package com.okynk.viaplaytest.feature.screen.main
+package com.okynk.viaplaytest.feature.screen.sections
 
 import android.app.Application
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.okynk.viaplaytest.feature.base.BaseViewModel
-import com.okynk.viaplaytest.feature.screen.main.epoxy.MainEpoxyData
+import com.okynk.viaplaytest.feature.screen.sections.epoxy.SectionsEpoxyData
 import com.okynk.viaplaytest.model.DashboardEntity
-import com.okynk.viaplaytest.model.ScreenEntity
 import com.okynk.viaplaytest.usecase.UseCase
 import com.okynk.viaplaytest.util.scheduler.SchedulerProvider
 
-class MainViewModel(
+class SectionsViewModel(
     application: Application,
     scheduler: SchedulerProvider,
     private val useCase: UseCase
 ) : BaseViewModel(application, scheduler) {
 
-    private val mListData = MutableLiveData<List<MainEpoxyData>>()
-    val listData: LiveData<List<MainEpoxyData>> = mListData
+    private val mListData = MutableLiveData<List<SectionsEpoxyData>>()
+    val listData: LiveData<List<SectionsEpoxyData>> = mListData
 
     override fun start() {
         getSections()
@@ -29,14 +28,14 @@ class MainViewModel(
         }
     }
 
-    private fun mapData(data: DashboardEntity): List<MainEpoxyData> {
+    private fun mapData(data: DashboardEntity): List<SectionsEpoxyData> {
         return data.sections.map { section ->
-            MainEpoxyData(
+            SectionsEpoxyData(
                 id = section.id,
                 title = section.title,
                 item = section,
                 onClick = {
-                    mStartActivity.postValue(ScreenEntity.SectionDetail(it))
+//                    mStartActivity.postValue(ScreenEntity.SectionDetail(it))
                 }
             )
         }

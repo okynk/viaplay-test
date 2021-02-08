@@ -1,25 +1,25 @@
-package com.okynk.viaplaytest.feature.screen.main
+package com.okynk.viaplaytest.feature.screen.sections
 
 import android.os.Bundle
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.okynk.viaplaytest.R
-import com.okynk.viaplaytest.databinding.FragmentMainBinding
+import com.okynk.viaplaytest.databinding.FragmentSectionsBinding
 import com.okynk.viaplaytest.feature.base.BaseFragment
-import com.okynk.viaplaytest.feature.screen.main.epoxy.MainEpoxyController
+import com.okynk.viaplaytest.feature.screen.sections.epoxy.SectionsEpoxyController
 import org.koin.androidx.viewmodel.ext.android.getViewModel
 
-class MainFragment : BaseFragment<MainViewModel, FragmentMainBinding>() {
+class SectionsFragment : BaseFragment<SectionsViewModel, FragmentSectionsBinding>() {
 
-    private val controller: MainEpoxyController by lazy {
-        MainEpoxyController()
+    private val controller: SectionsEpoxyController by lazy {
+        SectionsEpoxyController()
     }
 
-    override val viewModel: MainViewModel by lazy {
+    override val viewModel: SectionsViewModel by lazy {
         getViewModel()
     }
 
-    override fun getLayoutRes() = R.layout.fragment_main
+    override fun getLayoutRes() = R.layout.fragment_sections
 
     override fun initBinding() {
         viewBinding.viewModel = viewModel

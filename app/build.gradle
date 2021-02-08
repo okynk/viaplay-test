@@ -82,6 +82,10 @@ task ktlintFormat(type: JavaExec, group: "formatting") {
     args "-F", "src/**/*.kt"
 }
 
+kapt {
+    correctErrorTypes = true
+}
+
 dependencies {
     // Kotlin
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
@@ -117,6 +121,13 @@ dependencies {
 
     // UI
     implementation 'com.afollestad.material-dialogs:core:3.3.0'
+    implementation ("com.airbnb.android:epoxy:4.3.1"){
+        exclude group: "org.jetbrains.kotlin", module: "kotlin-parcelize-runtime"
+    }
+    implementation ('com.airbnb.android:epoxy-databinding:4.3.1'){
+        exclude group: "org.jetbrains.kotlin", module: "kotlin-parcelize-runtime"
+    }
+    kapt "com.airbnb.android:epoxy-processor:4.3.1"
 
     // Others
     implementation 'com.jakewharton.timber:timber:4.7.1'

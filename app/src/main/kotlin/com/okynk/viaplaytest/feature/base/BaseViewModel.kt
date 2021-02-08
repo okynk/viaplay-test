@@ -5,6 +5,7 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import com.okynk.viaplaytest.model.MessageDialogEntity
 import com.okynk.viaplaytest.model.ScreenEntity
+import com.okynk.viaplaytest.model.toMessageDialogEntity
 import com.okynk.viaplaytest.util.SingleLiveEvent
 import com.okynk.viaplaytest.util.scheduler.SchedulerProvider
 import io.reactivex.rxjava3.core.Completable
@@ -37,6 +38,19 @@ abstract class BaseViewModel(application: Application, private val scheduler: Sc
 
     private val disposable = CompositeDisposable()
 
+    private val defaultOnStart = {
+        mShowLoadingOverlay.postValue(true)
+    }
+
+    private val defaultOnEnd = {
+        mShowLoadingOverlay.postValue(false)
+    }
+
+    private val defaultOnError: Function1<Throwable, Unit> = { error ->
+        Timber.e(error)
+        mShowMessageDialog.postValue(error.toMessageDialogEntity())
+    }
+
     abstract fun start()
 
     override fun onCleared() {
@@ -45,62 +59,83 @@ abstract class BaseViewModel(application: Application, private val scheduler: Sc
     }
 
     protected fun <T> Observable<T>.execute(
-        onError: Function1<Throwable, Unit> = {},
+        onError: Function1<Throwable, Unit> = defaultOnError,
+        onStart: Function0<Unit> = defaultOnStart,
+        onEnd: Function0<Unit> = defaultOnEnd,
         onComplete: Function0<Unit> = {},
         onNext: Function1<T, Unit>
     ) {
         disposable += this.observeOn(scheduler.ui())
+            .doOnSubscribe {
+                onStart()
+            }
+            .doFinally {
+                onEnd()
+            }
             .subscribeWith(
                 object : DisposableObserver<T>() {
                     override fun onComplete() {
-                        onComplete.invoke()
+                        onComplete()
                     }
 
                     override fun onNext(t: T) {
-                        onNext.invoke(t)
+                        onNext(t)
                     }
 
                     override fun onError(e: Throwable) {
-                        Timber.e(e)
-                        onError.invoke(e)
+                        onError(e)
                     }
                 }
             )
     }
 
     protected fun <T> Single<T>.execute(
-        onError: Function1<Throwable, Unit> = {},
+        onError: Function1<Throwable, Unit> = defaultOnError,
+        onStart: Function0<Unit> = defaultOnStart,
+        onEnd: Function0<Unit> = defaultOnEnd,
         onSuccess: Function1<T, Unit>
     ) {
         disposable += this.observeOn(scheduler.ui())
+            .doOnSubscribe {
+                onStart()
+            }
+            .doFinally {
+                onEnd()
+            }
             .subscribeWith(
                 object : DisposableSingleObserver<T>() {
                     override fun onSuccess(t: T) {
-                        onSuccess.invoke(t)
+                        onSuccess(t)
                     }
 
                     override fun onError(e: Throwable) {
-                        Timber.e(e)
-                        onError.invoke(e)
+                        onError(e)
                     }
                 }
             )
     }
 
     protected fun Completable.execute(
-        onError: Function1<Throwable, Unit> = {},
+        onError: Function1<Throwable, Unit> = defaultOnError,
+        onStart: Function0<Unit> = defaultOnStart,
+        onEnd: Function0<Unit> = defaultOnEnd,
         onComplete: Function0<Unit> = {}
     ) {
         disposable += this.observeOn(scheduler.ui())
+            .doOnSubscribe {
+                onStart()
+            }
+            .doFinally {
+                onEnd()
+            }
             .subscribeWith(
                 object : DisposableCompletableObserver() {
                     override fun onComplete() {
-                        onComplete.invoke()
+                        onComplete()
                     }
 
                     override fun onError(e: Throwable) {
-                        Timber.e(e)
-                        onError.invoke(e)
+                        onError(e)
                     }
                 }
             )

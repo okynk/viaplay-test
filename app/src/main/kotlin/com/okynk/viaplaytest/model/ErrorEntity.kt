@@ -1,5 +1,7 @@
 package com.okynk.viaplaytest.model
 
+import com.okynk.viaplaytest.R
+
 data class ErrorEntity(
     val code: Int,
     override val message: String? = null
@@ -11,3 +13,8 @@ data class ErrorEntity(
         const val NETWORK_ERROR = 4
     }
 }
+
+fun Throwable.toMessageDialogEntity() = MessageDialogEntity(
+    titleRes = R.string.general_title_error,
+    message = this.localizedMessage
+)

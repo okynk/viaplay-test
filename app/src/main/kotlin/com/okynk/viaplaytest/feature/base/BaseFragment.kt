@@ -5,6 +5,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
+import androidx.annotation.StringRes
+import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
@@ -12,8 +14,6 @@ import com.afollestad.materialdialogs.MaterialDialog
 import com.okynk.viaplaytest.R
 import com.okynk.viaplaytest.model.MessageDialogEntity
 import com.okynk.viaplaytest.model.ScreenEntity
-import kotlinx.android.synthetic.main.fragment_base.*
-import kotlinx.android.synthetic.main.fragment_base.view.*
 
 abstract class BaseFragment<VM : BaseViewModel, BINDING : ViewDataBinding> : Fragment() {
     protected lateinit var viewBinding: BINDING
@@ -29,6 +29,8 @@ abstract class BaseFragment<VM : BaseViewModel, BINDING : ViewDataBinding> : Fra
     }
 
     protected lateinit var messageDialog: MaterialDialog
+
+    private lateinit var containerLoading: View
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -49,9 +51,10 @@ abstract class BaseFragment<VM : BaseViewModel, BINDING : ViewDataBinding> : Fra
             DataBindingUtil.inflate(
                 inflater,
                 getLayoutRes(),
-                containerMaster.container_content,
+                containerMaster.findViewById(R.id.container_content),
                 true
             )
+        containerLoading = containerMaster.findViewById(R.id.container_loading)
         viewBinding.lifecycleOwner = this
         initBinding()
         return containerMaster
@@ -68,13 +71,20 @@ abstract class BaseFragment<VM : BaseViewModel, BINDING : ViewDataBinding> : Fra
         messageDialog.show()
     }
 
+    protected fun setToolbarTitle(@StringRes titleRes: Int) {
+        (activity as AppCompatActivity).supportActionBar?.title =
+            requireContext().getString(titleRes)
+    }
+
     private fun initObservers() {
         viewModel.closeActivity.observe(viewLifecycleOwner) {
             requireActivity().finish()
         }
 
         viewModel.showLoadingOverlay.observe(viewLifecycleOwner) {
-            container_loading.visibility = if (it) View.VISIBLE else View.GONE
+            if (::containerLoading.isInitialized) {
+                containerLoading.visibility = if (it) View.VISIBLE else View.GONE
+            }
         }
 
         viewModel.showMessageDialog.observe(viewLifecycleOwner) {
@@ -94,7 +104,7 @@ abstract class BaseFragment<VM : BaseViewModel, BINDING : ViewDataBinding> : Fra
         startActivity(
             when (screen) {
                 ScreenEntity.SectionList -> TODO()
-                ScreenEntity.SectionDetail -> TODO()
+                is ScreenEntity.SectionDetail -> TODO()
             }
         )
     }

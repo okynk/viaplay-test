@@ -6,7 +6,9 @@ import androidx.lifecycle.MutableLiveData
 import com.okynk.viaplaytest.feature.base.BaseViewModel
 import com.okynk.viaplaytest.feature.screen.sections.epoxy.SectionsEpoxyData
 import com.okynk.viaplaytest.model.DashboardEntity
+import com.okynk.viaplaytest.model.LinkEntity
 import com.okynk.viaplaytest.usecase.UseCase
+import com.okynk.viaplaytest.util.SingleLiveEvent
 import com.okynk.viaplaytest.util.scheduler.SchedulerProvider
 
 class SectionsViewModel(
@@ -18,7 +20,10 @@ class SectionsViewModel(
     private val mListData = MutableLiveData<List<SectionsEpoxyData>>()
     val listData: LiveData<List<SectionsEpoxyData>> = mListData
 
-    override fun start() {
+    private val mOpenDetail = SingleLiveEvent<LinkEntity>()
+    val openDetail: LiveData<LinkEntity> = mOpenDetail
+
+    fun start() {
         getSections()
     }
 
@@ -35,7 +40,7 @@ class SectionsViewModel(
                 title = section.title,
                 item = section,
                 onClick = {
-//                    mStartActivity.postValue(ScreenEntity.SectionDetail(it))
+                    mOpenDetail.postValue(it)
                 }
             )
         }

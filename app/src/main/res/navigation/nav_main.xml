@@ -8,5 +8,24 @@
     <fragment
         android:id="@+id/sections"
         android:name="com.okynk.viaplaytest.feature.screen.sections.SectionsFragment"
-        tools:layout="@layout/fragment_sections" />
+        tools:layout="@layout/fragment_sections">
+        <action
+            android:id="@+id/open_detail"
+            app:destination="@id/detail">
+
+            <argument
+                android:name="href"
+                app:argType="string" />
+        </action>
+    </fragment>
+    <fragment
+        android:id="@+id/detail"
+        android:name="com.okynk.viaplaytest.feature.screen.detail.DetailFragment"
+        tools:layout="@layout/fragment_detail">
+        <argument
+            android:name="href"
+            android:defaultValue=""
+            app:argType="string" />
+    </fragment>
+
 </navigation>

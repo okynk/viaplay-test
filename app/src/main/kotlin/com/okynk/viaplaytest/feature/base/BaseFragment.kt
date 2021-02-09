@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.activity.OnBackPressedCallback
 import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
@@ -21,19 +20,12 @@ abstract class BaseFragment<VM : BaseViewModel, BINDING : ViewDataBinding> : Fra
 
     abstract fun initBinding()
 
-    protected val handleOnBackPressed = object : OnBackPressedCallback(false) {
-        override fun handleOnBackPressed() {
-            viewModel.onBackPressed()
-        }
-    }
-
     protected lateinit var messageDialog: MaterialDialog
 
     private lateinit var containerLoading: View
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        activity?.onBackPressedDispatcher?.addCallback(handleOnBackPressed)
         messageDialog = MaterialDialog(requireContext())
             .title(R.string.general_title_error)
             .message(R.string.general_label_error)
@@ -71,8 +63,16 @@ abstract class BaseFragment<VM : BaseViewModel, BINDING : ViewDataBinding> : Fra
     }
 
     protected fun setToolbarTitle(@StringRes titleRes: Int) {
-        (activity as AppCompatActivity).supportActionBar?.title =
-            requireContext().getString(titleRes)
+        (activity as AppCompatActivity).supportActionBar?.apply {
+            title = requireContext().getString(titleRes)
+        }
+    }
+
+    protected fun showBackButton(show: Boolean) {
+        (activity as AppCompatActivity).supportActionBar?.apply {
+            setDisplayHomeAsUpEnabled(show)
+            setDisplayShowHomeEnabled(show)
+        }
     }
 
     private fun initObservers() {
@@ -88,10 +88,6 @@ abstract class BaseFragment<VM : BaseViewModel, BINDING : ViewDataBinding> : Fra
 
         viewModel.showMessageDialog.observe(viewLifecycleOwner) {
             showMessageDialog(it)
-        }
-
-        viewModel.goBack.observe(viewLifecycleOwner) {
-            activity?.onBackPressed()
         }
     }
 }

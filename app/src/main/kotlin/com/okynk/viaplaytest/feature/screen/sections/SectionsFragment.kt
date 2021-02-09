@@ -7,6 +7,7 @@ import com.okynk.viaplaytest.R
 import com.okynk.viaplaytest.databinding.FragmentSectionsBinding
 import com.okynk.viaplaytest.feature.base.BaseFragment
 import com.okynk.viaplaytest.feature.screen.sections.epoxy.SectionsEpoxyController
+import com.okynk.viaplaytest.util.extensions.navigate
 import org.koin.androidx.viewmodel.ext.android.getViewModel
 
 class SectionsFragment : BaseFragment<SectionsViewModel, FragmentSectionsBinding>() {
@@ -27,7 +28,8 @@ class SectionsFragment : BaseFragment<SectionsViewModel, FragmentSectionsBinding
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setToolbarTitle(R.string.sectionlist_title)
+        setToolbarTitle(R.string.sections_title)
+        showBackButton(false)
         initObservers()
         initList()
         viewModel.start()
@@ -36,6 +38,10 @@ class SectionsFragment : BaseFragment<SectionsViewModel, FragmentSectionsBinding
     private fun initObservers() {
         viewModel.listData.observe(viewLifecycleOwner) {
             controller.setData(it)
+        }
+
+        viewModel.openDetail.observe(viewLifecycleOwner) {
+            navigate(SectionsFragmentDirections.openDetail(it.href))
         }
     }
 

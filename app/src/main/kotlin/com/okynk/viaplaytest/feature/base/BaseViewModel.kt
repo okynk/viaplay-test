@@ -29,9 +29,6 @@ abstract class BaseViewModel(application: Application, private val scheduler: Sc
     protected val mCloseActivity = SingleLiveEvent<Void>()
     val closeActivity: LiveData<Void> = mCloseActivity
 
-    protected val mGoBack = SingleLiveEvent<Void>()
-    val goBack: LiveData<Void> = mGoBack
-
     private val disposable = CompositeDisposable()
 
     private val defaultOnStart = {
@@ -46,8 +43,6 @@ abstract class BaseViewModel(application: Application, private val scheduler: Sc
         Timber.e(error)
         mShowMessageDialog.postValue(error.toMessageDialogEntity())
     }
-
-    abstract fun start()
 
     override fun onCleared() {
         disposable.clear()
@@ -135,10 +130,5 @@ abstract class BaseViewModel(application: Application, private val scheduler: Sc
                     }
                 }
             )
-    }
-
-    // Override this to handle fragment back pressed
-    open fun onBackPressed() {
-        mGoBack.call()
     }
 }

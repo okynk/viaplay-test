@@ -1,6 +1,7 @@
 package com.okynk.viaplaytest.feature.base
 
 import android.os.Bundle
+import android.view.MenuItem
 import androidx.annotation.IdRes
 import androidx.annotation.LayoutRes
 import androidx.annotation.NavigationRes
@@ -10,6 +11,15 @@ import com.okynk.viaplaytest.R
 import com.okynk.viaplaytest.util.NO_RES
 
 abstract class BaseActivity : AppCompatActivity() {
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return if (item.itemId == android.R.id.home) {
+            onBackPressed()
+            true
+        } else {
+            super.onOptionsItemSelected(item)
+        }
+    }
 
     fun setContentViewWithNavGraph(
         @LayoutRes layoutRes: Int = R.layout.activity_base,

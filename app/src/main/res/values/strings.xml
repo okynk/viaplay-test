@@ -5,5 +5,9 @@
     <string name="general.label.error">Something went wrong</string>
     <string name="general.button.ok">OK</string>
 
-    <string name="sectionlist.title">Sections</string>
+    <string name="sections.title">Sections</string>
+
+    <string name="detail.title">Section Detail</string>
+    <string name="detail.label.title">Title</string>
+    <string name="detail.label.description">Description</string>
 </resources>

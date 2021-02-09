@@ -76,10 +76,6 @@ abstract class BaseFragment<VM : BaseViewModel, BINDING : ViewDataBinding> : Fra
     }
 
     private fun initObservers() {
-        viewModel.closeActivity.observe(viewLifecycleOwner) {
-            requireActivity().finish()
-        }
-
         viewModel.showLoadingOverlay.observe(viewLifecycleOwner) {
             if (::containerLoading.isInitialized) {
                 containerLoading.visibility = if (it) View.VISIBLE else View.GONE

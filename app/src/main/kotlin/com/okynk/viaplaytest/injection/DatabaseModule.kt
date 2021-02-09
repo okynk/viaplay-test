@@ -1,12 +1,11 @@
 package com.okynk.viaplaytest.injection
 
 import com.okynk.viaplaytest.database.AppDatabase
-import org.koin.android.ext.koin.androidApplication
 import org.koin.dsl.module
 
 val databaseModule = module {
     single {
-        AppDatabase.getDatabase(androidApplication())
+        AppDatabase.getDatabase(get())
     }
 
     single {

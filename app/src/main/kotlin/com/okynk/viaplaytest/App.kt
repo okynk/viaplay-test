@@ -33,7 +33,9 @@ class App : MultiDexApplication(), KoinComponent {
         startKoin {
             androidLogger(Level.ERROR)
             androidContext(this@App)
-            modules(appModules)
+
+            // separate RxModule because we need to inject different one for UnitTest
+            modules(appModules + rxModule)
         }
 
         if (BuildConfig.DEBUG && FlipperUtils.shouldEnableFlipper(this)) {

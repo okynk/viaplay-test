@@ -10,10 +10,12 @@ data class ErrorEntity(
         const val NOT_IMPLEMENTED_LOCAL_DATASOURCE = 1
         const val NOT_IMPLEMENTED_REMOTE_DATASOURCE = 2
         const val GENERAL_ERROR = 3
+        const val EMPTY_DATA_IN_DB = 4
     }
 
     companion object {
         val GENERIC = ErrorEntity(Code.GENERAL_ERROR)
+        val EMPTY_DATA = ErrorEntity(Code.EMPTY_DATA_IN_DB)
     }
 }
 

@@ -13,11 +13,11 @@ class LocalDataSource(
     private val sectionsDao: SectionsDao
 ) : DataSource {
     override fun getDashboard(): Single<DashboardEntity> {
-        return dashboardDao.getDashboard()
+        return dashboardDao.getDashboard().toSingle()
     }
 
     override fun getSection(link: LinkEntity): Single<SectionEntity> {
-        return sectionsDao.getSection(link.id)
+        return sectionsDao.getSection(link.id).toSingle()
     }
 
     override fun saveDashboard(data: DashboardEntity): Completable {

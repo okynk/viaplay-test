@@ -5,7 +5,7 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.okynk.viaplaytest.model.DashboardEntity
-import io.reactivex.rxjava3.core.Single
+import io.reactivex.rxjava3.core.Maybe
 
 @Dao
 interface DashboardDao {
@@ -13,7 +13,7 @@ interface DashboardDao {
     fun insert(data: DashboardEntity)
 
     @Query("SELECT * FROM dashboard LIMIT 1")
-    fun getDashboard(): Single<DashboardEntity>
+    fun getDashboard(): Maybe<DashboardEntity>
 
     @Query("DELETE FROM dashboard")
     fun deleteAll()

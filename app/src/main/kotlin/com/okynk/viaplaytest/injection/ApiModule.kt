@@ -1,5 +1,7 @@
 package com.okynk.viaplaytest.injection
 
+import com.facebook.flipper.plugins.network.FlipperOkhttpInterceptor
+import com.facebook.flipper.plugins.network.NetworkFlipperPlugin
 import com.google.gson.Gson
 import com.okynk.viaplaytest.BuildConfig
 import com.okynk.viaplaytest.api.ApiService
@@ -17,7 +19,7 @@ private const val HTTP_LOGGING_INTERCEPTOR = "HTTP_LOGGING_INTERCEPTOR"
 private const val CONNECTION_TIMEOUT = 60L
 
 val apiModule = module {
-    single { provideOkHttpClient(get(named(HTTP_LOGGING_INTERCEPTOR))) }
+    single { provideOkHttpClient(get(named(HTTP_LOGGING_INTERCEPTOR)), get()) }
     single { provideRetrofit<ApiService>(get(), get()) }
     single(named(HTTP_LOGGING_INTERCEPTOR)) {
         provideHttpLoggingInterceptor()
@@ -34,13 +36,22 @@ private inline fun <reified T> provideRetrofit(okHttpClient: OkHttpClient, gson:
     return retrofit.create(T::class.java)
 }
 
-private fun provideOkHttpClient(httpLoggingInterceptor: Interceptor): OkHttpClient {
-    return OkHttpClient.Builder()
+private fun provideOkHttpClient(
+    httpLoggingInterceptor: Interceptor,
+    networkFlipperPlugin: NetworkFlipperPlugin
+): OkHttpClient {
+    val builder = OkHttpClient.Builder()
         .connectTimeout(CONNECTION_TIMEOUT, TimeUnit.SECONDS)
         .readTimeout(CONNECTION_TIMEOUT, TimeUnit.SECONDS)
         .retryOnConnectionFailure(true)
-        .addInterceptor(httpLoggingInterceptor)
-        .build()
+
+    if (BuildConfig.DEBUG) {
+        builder.addNetworkInterceptor(FlipperOkhttpInterceptor(networkFlipperPlugin))
+    }
+
+    builder.addInterceptor(httpLoggingInterceptor)
+
+    return builder.build()
 }
 
 private fun provideHttpLoggingInterceptor(): Interceptor {

@@ -1,16 +1,36 @@
 package com.okynk.viaplaytest.datasource
 
+import com.okynk.viaplaytest.database.DashboardDao
+import com.okynk.viaplaytest.database.SectionsDao
 import com.okynk.viaplaytest.model.DashboardEntity
-import com.okynk.viaplaytest.model.ErrorEntity
+import com.okynk.viaplaytest.model.LinkEntity
 import com.okynk.viaplaytest.model.SectionEntity
+import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Single
 
-class LocalDataSource : DataSource {
+class LocalDataSource(
+    private val dashboardDao: DashboardDao,
+    private val sectionsDao: SectionsDao
+) : DataSource {
     override fun getDashboard(): Single<DashboardEntity> {
-        throw ErrorEntity(ErrorEntity.Code.NOT_IMPLEMENTED_LOCAL_DATASOURCE)
+        return dashboardDao.getDashboard()
     }
 
-    override fun getSection(href: String): Single<SectionEntity> {
-        throw ErrorEntity(ErrorEntity.Code.NOT_IMPLEMENTED_LOCAL_DATASOURCE)
+    override fun getSection(link: LinkEntity): Single<SectionEntity> {
+        return sectionsDao.getSection(link.id)
+    }
+
+    override fun saveDashboard(data: DashboardEntity): Completable {
+        return Completable.create { emitter ->
+            dashboardDao.insert(data)
+            emitter.onComplete()
+        }
+    }
+
+    override fun saveSection(data: SectionEntity): Completable {
+        return Completable.create { emitter ->
+            sectionsDao.insert(data)
+            emitter.onComplete()
+        }
     }
 }

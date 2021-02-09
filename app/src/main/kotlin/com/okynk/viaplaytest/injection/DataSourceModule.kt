@@ -9,7 +9,10 @@ import org.koin.dsl.module
 
 val dataSourceModule = module {
     single<DataSource>(named(DataSource.LOCAL)) {
-        LocalDataSource()
+        LocalDataSource(
+            dashboardDao = get(),
+            sectionsDao = get()
+        )
     }
 
     single<DataSource>(named(DataSource.REMOTE)) {

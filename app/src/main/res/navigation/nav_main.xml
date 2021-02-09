@@ -14,8 +14,8 @@
             app:destination="@id/detail">
 
             <argument
-                android:name="href"
-                app:argType="string" />
+                android:name="link"
+                app:argType="com.okynk.viaplaytest.model.LinkEntity" />
         </action>
     </fragment>
     <fragment
@@ -23,9 +23,10 @@
         android:name="com.okynk.viaplaytest.feature.screen.detail.DetailFragment"
         tools:layout="@layout/fragment_detail">
         <argument
-            android:name="href"
-            android:defaultValue=""
-            app:argType="string" />
+            android:name="link"
+            android:defaultValue="@null"
+            app:argType="com.okynk.viaplaytest.model.LinkEntity"
+            app:nullable="true" />
     </fragment>
 
 </navigation>

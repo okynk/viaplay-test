@@ -1,6 +1,7 @@
 package com.okynk.viaplaytest.usecase
 
 import com.okynk.viaplaytest.model.DashboardEntity
+import com.okynk.viaplaytest.model.LinkEntity
 import com.okynk.viaplaytest.model.SectionEntity
 import com.okynk.viaplaytest.repository.Repository
 import com.okynk.viaplaytest.usecase.base.BaseUseCase
@@ -15,7 +16,7 @@ class UseCaseImpl(
         return composeSingle { repository.getDashboard() }
     }
 
-    override fun getSection(href: String): Single<SectionEntity> {
-        return composeSingle { repository.getSection(href) }
+    override fun getSection(link: LinkEntity): Single<SectionEntity> {
+        return composeSingle { repository.getSection(link) }
     }
 }

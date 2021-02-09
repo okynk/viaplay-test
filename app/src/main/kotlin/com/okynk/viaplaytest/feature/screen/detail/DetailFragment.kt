@@ -27,6 +27,6 @@ class DetailFragment : BaseFragment<DetailViewModel, FragmentDetailBinding>() {
         setToolbarTitle(R.string.detail_title)
         showBackButton(true)
 
-        viewModel.start(args.href)
+        viewModel.start(args.link)
     }
 }

@@ -4,9 +4,11 @@ import android.app.Application
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.okynk.viaplaytest.feature.base.BaseViewModel
+import com.okynk.viaplaytest.model.ErrorEntity
+import com.okynk.viaplaytest.model.LinkEntity
 import com.okynk.viaplaytest.model.SectionEntity
+import com.okynk.viaplaytest.model.toMessageDialogEntity
 import com.okynk.viaplaytest.usecase.UseCase
-import com.okynk.viaplaytest.util.extensions.cleanHref
 import com.okynk.viaplaytest.util.scheduler.SchedulerProvider
 
 class DetailViewModel(
@@ -18,13 +20,17 @@ class DetailViewModel(
     private val mViewData = MutableLiveData(DetailViewData())
     val viewData: LiveData<DetailViewData> = mViewData
 
-    fun start(href: String) {
-        getSection(href)
+    fun start(link: LinkEntity?) {
+        getSection(link)
     }
 
-    private fun getSection(href: String) {
-        useCase.getSection(href.cleanHref()).execute {
-            updateViewData(mapData(it))
+    private fun getSection(link: LinkEntity?) {
+        link?.let {
+            useCase.getSection(link).execute {
+                updateViewData(mapData(it))
+            }
+        } ?: run {
+            mShowMessageDialog.postValue(ErrorEntity.GENERIC.toMessageDialogEntity())
         }
     }
 

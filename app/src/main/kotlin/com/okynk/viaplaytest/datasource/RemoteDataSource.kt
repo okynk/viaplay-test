@@ -5,7 +5,11 @@ import com.okynk.viaplaytest.api.response.DashboardResponse
 import com.okynk.viaplaytest.api.response.SectionResponse
 import com.okynk.viaplaytest.mapper.Mapper
 import com.okynk.viaplaytest.model.DashboardEntity
+import com.okynk.viaplaytest.model.ErrorEntity
+import com.okynk.viaplaytest.model.LinkEntity
 import com.okynk.viaplaytest.model.SectionEntity
+import com.okynk.viaplaytest.util.extensions.cleanHref
+import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Single
 
 class RemoteDataSource(
@@ -19,9 +23,17 @@ class RemoteDataSource(
         }
     }
 
-    override fun getSection(href: String): Single<SectionEntity> {
-        return apiService.getSection(href).map {
+    override fun getSection(link: LinkEntity): Single<SectionEntity> {
+        return apiService.getSection(link.href.cleanHref()).map {
             mapperSection.map(it)
         }
+    }
+
+    override fun saveDashboard(data: DashboardEntity): Completable {
+        throw ErrorEntity(ErrorEntity.Code.NOT_IMPLEMENTED_REMOTE_DATASOURCE)
+    }
+
+    override fun saveSection(data: SectionEntity): Completable {
+        throw ErrorEntity(ErrorEntity.Code.NOT_IMPLEMENTED_REMOTE_DATASOURCE)
     }
 }

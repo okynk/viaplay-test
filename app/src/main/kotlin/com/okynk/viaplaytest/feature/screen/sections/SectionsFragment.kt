@@ -41,7 +41,7 @@ class SectionsFragment : BaseFragment<SectionsViewModel, FragmentSectionsBinding
         }
 
         viewModel.openDetail.observe(viewLifecycleOwner) {
-            navigate(SectionsFragmentDirections.openDetail(it.href))
+            navigate(SectionsFragmentDirections.openDetail(it))
         }
     }
 

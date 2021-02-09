@@ -34,5 +34,6 @@ val appModules = listOf(
     utilModule,
     viewModelModule,
     mapperModule,
-    apiModule
+    apiModule,
+    databaseModule
 )

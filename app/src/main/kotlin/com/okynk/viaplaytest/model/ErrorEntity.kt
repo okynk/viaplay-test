@@ -15,7 +15,7 @@ data class ErrorEntity(
 
     companion object {
         val GENERIC = ErrorEntity(Code.GENERAL_ERROR)
-        val EMPTY_DATA = ErrorEntity(Code.EMPTY_DATA_IN_DB)
+        val NOT_IMPLEMENTED_REMOTE_DATASOURCE = ErrorEntity(Code.NOT_IMPLEMENTED_REMOTE_DATASOURCE)
     }
 }
 

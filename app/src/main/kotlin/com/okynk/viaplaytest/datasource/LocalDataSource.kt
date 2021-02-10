@@ -21,16 +21,10 @@ class LocalDataSource(
     }
 
     override fun saveDashboard(data: DashboardEntity): Completable {
-        return Completable.create { emitter ->
-            dashboardDao.insert(data)
-            emitter.onComplete()
-        }
+        return dashboardDao.insert(data)
     }
 
     override fun saveSection(data: SectionEntity): Completable {
-        return Completable.create { emitter ->
-            sectionsDao.insert(data)
-            emitter.onComplete()
-        }
+        return sectionsDao.insert(data)
     }
 }

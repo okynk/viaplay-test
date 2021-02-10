@@ -5,6 +5,7 @@ import com.okynk.viaplaytest.datasource.DataSource
 import com.okynk.viaplaytest.mock.mockDashboardEntity
 import com.okynk.viaplaytest.mock.mockLinkEntity_1
 import com.okynk.viaplaytest.mock.mockSectionEntity
+import io.mockk.Called
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
@@ -51,8 +52,8 @@ class RepositoryTest : BaseTest() {
             .assertResult(expected)
 
         verify(exactly = 1) { local.getDashboard() }
-        verify(exactly = 0) { remote.getDashboard() }
         verify(exactly = 0) { local.saveDashboard(any()) }
+        verify { remote wasNot Called }
     }
 
     @Test
@@ -83,7 +84,7 @@ class RepositoryTest : BaseTest() {
             .assertResult(expected)
 
         verify(exactly = 1) { local.getSection(any()) }
-        verify(exactly = 0) { remote.getSection(any()) }
         verify(exactly = 0) { local.saveSection(any()) }
+        verify { remote wasNot Called }
     }
 }

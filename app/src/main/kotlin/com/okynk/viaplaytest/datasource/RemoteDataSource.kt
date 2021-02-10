@@ -30,10 +30,10 @@ class RemoteDataSource(
     }
 
     override fun saveDashboard(data: DashboardEntity): Completable {
-        throw ErrorEntity(ErrorEntity.Code.NOT_IMPLEMENTED_REMOTE_DATASOURCE)
+        throw ErrorEntity.NOT_IMPLEMENTED_REMOTE_DATASOURCE
     }
 
     override fun saveSection(data: SectionEntity): Completable {
-        throw ErrorEntity(ErrorEntity.Code.NOT_IMPLEMENTED_REMOTE_DATASOURCE)
+        throw ErrorEntity.NOT_IMPLEMENTED_REMOTE_DATASOURCE
     }
 }

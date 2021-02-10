@@ -5,7 +5,11 @@ import com.okynk.viaplaytest.api.ApiService
 import com.okynk.viaplaytest.api.response.DashboardResponse
 import com.okynk.viaplaytest.api.response.SectionResponse
 import com.okynk.viaplaytest.mapper.Mapper
-import com.okynk.viaplaytest.mock.*
+import com.okynk.viaplaytest.mock.mockDashboardEntity
+import com.okynk.viaplaytest.mock.mockDashboardResponse
+import com.okynk.viaplaytest.mock.mockLinkEntity_1
+import com.okynk.viaplaytest.mock.mockSectionEntity
+import com.okynk.viaplaytest.mock.mockSectionResponse
 import com.okynk.viaplaytest.model.DashboardEntity
 import com.okynk.viaplaytest.model.ErrorEntity
 import com.okynk.viaplaytest.model.SectionEntity

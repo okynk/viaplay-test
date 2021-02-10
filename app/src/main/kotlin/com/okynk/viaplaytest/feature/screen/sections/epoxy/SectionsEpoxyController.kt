@@ -13,9 +13,11 @@ class SectionsEpoxyController(
             sections {
                 id(section.id)
                 data(section)
-                click(View.OnClickListener {
-                    onItemClicked(section.item)
-                })
+                click(
+                    View.OnClickListener {
+                        onItemClicked(section.item)
+                    }
+                )
             }
         }
     }

@@ -6,7 +6,15 @@ import com.facebook.flipper.android.utils.FlipperUtils
 import com.facebook.flipper.plugins.databases.DatabasesFlipperPlugin
 import com.facebook.flipper.plugins.network.NetworkFlipperPlugin
 import com.facebook.soloader.SoLoader
-import com.okynk.viaplaytest.injection.*
+import com.okynk.viaplaytest.injection.apiModule
+import com.okynk.viaplaytest.injection.dataSourceModule
+import com.okynk.viaplaytest.injection.databaseModule
+import com.okynk.viaplaytest.injection.mapperModule
+import com.okynk.viaplaytest.injection.repositoryModule
+import com.okynk.viaplaytest.injection.rxModule
+import com.okynk.viaplaytest.injection.useCaseModule
+import com.okynk.viaplaytest.injection.utilModule
+import com.okynk.viaplaytest.injection.viewModelModule
 import org.koin.android.ext.android.inject
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
@@ -15,7 +23,6 @@ import org.koin.core.component.KoinComponent
 import org.koin.core.context.startKoin
 import org.koin.core.logger.Level
 import timber.log.Timber
-
 
 @KoinApiExtension
 class App : MultiDexApplication(), KoinComponent {

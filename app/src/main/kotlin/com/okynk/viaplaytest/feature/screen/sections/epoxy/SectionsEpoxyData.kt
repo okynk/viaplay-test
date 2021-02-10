@@ -5,6 +5,5 @@ import com.okynk.viaplaytest.model.LinkEntity
 data class SectionsEpoxyData(
     val id: String,
     val title: String,
-    val item: LinkEntity,
-    val onClick: Function1<LinkEntity, Unit> = {}
+    val item: LinkEntity
 )

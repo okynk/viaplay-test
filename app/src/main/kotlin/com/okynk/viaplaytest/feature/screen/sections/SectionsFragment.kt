@@ -13,7 +13,9 @@ import org.koin.androidx.viewmodel.ext.android.getViewModel
 class SectionsFragment : BaseFragment<SectionsViewModel, FragmentSectionsBinding>() {
 
     private val controller: SectionsEpoxyController by lazy {
-        SectionsEpoxyController()
+        SectionsEpoxyController(onItemClicked = {
+            navigate(SectionsFragmentDirections.openDetail(it))
+        })
     }
 
     override val viewModel: SectionsViewModel by lazy {
@@ -38,10 +40,6 @@ class SectionsFragment : BaseFragment<SectionsViewModel, FragmentSectionsBinding
     private fun initObservers() {
         viewModel.listData.observe(viewLifecycleOwner) {
             controller.setData(it)
-        }
-
-        viewModel.openDetail.observe(viewLifecycleOwner) {
-            navigate(SectionsFragmentDirections.openDetail(it))
         }
     }
 
